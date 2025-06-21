@@ -64,6 +64,14 @@ class Category(models.Model):
     description = models.TextField(blank=True, null=True)
     picture = models.CharField(max_length=255, blank=True, null=True)
 
+    @classmethod
+    def create(cls, category_name=None, description=None, picture=None):
+        if not category_name:
+            category_name = "Default Category"
+        category = cls(category_name=category_name, description=description, picture=picture)
+        category.save()
+        return category
+
     class Meta:
         db_table = 'Category'
 
@@ -72,7 +80,7 @@ class Category(models.Model):
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField('entrega.User', on_delete=models.CASCADE, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     contact_name = models.CharField(max_length=100, blank=True, null=True)
 
@@ -112,7 +120,7 @@ class Orderdetails(models.Model):
 
 class Personalinfo(models.Model):
     personal_id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField('entrega.User', on_delete=models.CASCADE, blank=True, null=True)
     county = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
