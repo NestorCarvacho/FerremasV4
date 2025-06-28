@@ -60,7 +60,7 @@ class Cart(models.Model):
 
 class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
-    category_name = models.CharField(max_length=100, blank=True, null=True)
+    category_name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     picture = models.CharField(max_length=255, blank=True, null=True)
 

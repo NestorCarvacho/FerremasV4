@@ -165,3 +165,11 @@ class OrderUpdateView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, order_id):
+        if request.user.user_type != 'employee':
+            return Response({'error': 'Only employees can delete orders'},
+                            status=status.HTTP_403_FORBIDDEN)
+        order = get_object_or_404(Order, order_id=order_id)
+        order.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
